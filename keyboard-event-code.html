@@ -28,14 +28,16 @@
 <body>
     <input autofocus />
     <div>click in textbox &amp; press any key</div>
-    <div></div>
-
+    <div id="container">
+        <div id="keydown"></div>
+        <div id="keypress"></div>
+        <div id="keyup"></div>
+    </div>
+    
     <script>
         (function () {
-            var input = document.getElementsByTagName("input")[0]
-            input.addEventListener("keydown", function (event) {
+            function render(event, element) {
                 event.preventDefault();
-
                 var output = {
                     which: event.which,
                     keyCode: event.keyCode,
@@ -46,10 +48,22 @@
                     altKey: event.altKey,
                     ctrlKey: event.ctrlKey,
                     metaKey: event.metaKey
-                }
-                console.log(output);
-                var div = document.getElementsByTagName("div")[1]
-                div.innerHTML = `<pre>${JSON.stringify(output, null, 2)}</pre>`;
+                };
+                element.innerHTML = '<pre>' + JSON.stringify(output, null, 2) + '</pre>';
+            }
+
+            var input = document.getElementsByTagName("input")[0];
+            input.addEventListener("keydown", function (event) {
+                var div = document..getElementById("keydown");
+                render(event, div);
+            });
+            input.addEventListener("keypress", function (event) {
+                var div = document..getElementById("keypress");
+                render(event, div);
+            });
+            input.addEventListener("keyup", function (event) {
+                var div = document..getElementById("keyup");
+                render(event, div);
             });
         })();
     </script>
