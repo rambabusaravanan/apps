@@ -40,7 +40,7 @@
     
     <script>
         (function () {
-            function render(event, element) {
+            function handler(event) {
                 event.preventDefault();
                 var output = {
                     which: event.which,
@@ -53,22 +53,14 @@
                     ctrlKey: event.ctrlKey,
                     metaKey: event.metaKey
                 };
-                element.innerHTML = '<pre>' + JSON.stringify(output, null, 2) + '</pre>';
+                var element = document.getElementById(event.type);
+                element.innerHTML = event.type + '<pre>' + JSON.stringify(output, null, 2) + '</pre>';
             }
 
             var input = document.getElementsByTagName("input")[0];
-            input.addEventListener("keydown", function (event) {
-                var div = document.getElementById("keydown");
-                render(event, div);
-            });
-            input.addEventListener("keypress", function (event) {
-                var div = document.getElementById("keypress");
-                render(event, div);
-            });
-            input.addEventListener("keyup", function (event) {
-                var div = document.getElementById("keyup");
-                render(event, div);
-            });
+            input.addEventListener("keydown", handler);
+            input.addEventListener("keypress", handler);
+            input.addEventListener("keyup", handler);
         })();
     </script>
 </body>
