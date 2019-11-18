@@ -41,7 +41,6 @@
     <script>
         (function () {
             function handler(event) {
-                event.preventDefault();
                 var output = {
                     which: event.which,
                     keyCode: event.keyCode,
@@ -53,8 +52,11 @@
                     ctrlKey: event.ctrlKey,
                     metaKey: event.metaKey
                 };
+
                 var element = document.getElementById(event.type);
                 element.innerHTML = event.type + '<pre>' + JSON.stringify(output, null, 2) + '</pre>';
+                
+                if (event.type !== "keydown" || event.key === "Tab") event.preventDefault();
             }
 
             var input = document.getElementsByTagName("input")[0];
