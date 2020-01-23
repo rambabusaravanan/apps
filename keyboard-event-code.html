@@ -35,13 +35,18 @@
     <div id="container">
         <div id="keydown"></div>
         <div id="keypress"></div>
+        <div id="beforeinput"></div>
+        <div id="input"></div>
         <div id="keyup"></div>
+        <div id="change"></div>
     </div>
     
     <script>
         (function () {
             function handler(event) {
                 var output = {
+                    'target.value': event.target && event.target.value,
+                    data: event.data,
                     which: event.which,
                     keyCode: event.keyCode,
                     key: event.key,
@@ -53,16 +58,21 @@
                     metaKey: event.metaKey
                 };
 
+                console.log(event.type, event);
+
                 var element = document.getElementById(event.type);
                 element.innerHTML = event.type + '<pre>' + JSON.stringify(output, null, 2) + '</pre>';
                 
-                if (event.type !== "keydown" || event.key === "Tab") event.preventDefault();
+                // if (event.type !== "keydown" || event.key === "Tab") event.preventDefault();
             }
 
             var input = document.getElementsByTagName("input")[0];
             input.addEventListener("keydown", handler);
             input.addEventListener("keypress", handler);
+            input.addEventListener("beforeinput", handler);
+            input.addEventListener("input", handler);
             input.addEventListener("keyup", handler);
+            input.addEventListener("change", handler);
         })();
     </script>
 </body>
